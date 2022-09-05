@@ -1,4 +1,4 @@
-﻿Public Class Form1
+Public Class UdKort
 
     Shared random As New Random()
     Dim Kort(52) As Integer
