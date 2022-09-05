@@ -11,3 +11,13 @@ FYI antivirus will probably block it.
 The game was my exam project for highschool, in programming in C++.
 
 Has been translated for better understanding.
+
+**************************************
+*       Pyramid solitaire            *
+**************************************
+* The game can be compared to        *
+* the original version of pyramid    *
+* solitaire                          *
+**************************************
+* Iván Viemoes Cuevas   27-04-2020   *
+**************************************
