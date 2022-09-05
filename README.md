@@ -14,6 +14,7 @@ Has been translated for better understanding.
 
 
 * Pyramid solitaire
+
 The game can be compared to the original version of pyramid solitaire.
 
 * Iván Viemoes Cuevas
