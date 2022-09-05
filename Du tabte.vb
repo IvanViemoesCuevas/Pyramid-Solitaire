@@ -11,7 +11,7 @@
 
 Public Class Du_tabte
     Private Sub Button_TryAgain_Click(sender As Object, e As EventArgs) Handles Button_TryAgain.Click
-        'hvis der trykket på knappen starter den spillet forfra
+        'If the button is pressed the game restarts
         Application.Restart()
     End Sub
 End Class
