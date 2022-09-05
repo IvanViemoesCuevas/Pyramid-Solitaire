@@ -1,9 +1,9 @@
 ﻿'**************************************
 '*       Pyramid solitaire            *
 '**************************************
-'* Spillet er en lignende version til *
-'* til den normale kabale af          *
-'* pyramide kabale                    *
+'* The game can be compared to        *
+'* the original version of pyramid    *
+'* solitaire                          *
 '**************************************
 '* Iván Viemoes Cuevas   27-04-2020   *
 '**************************************
