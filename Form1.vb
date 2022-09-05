@@ -11,43 +11,44 @@
 
 Public Class Form1
 
-    'Laver random tal, som kan bruges til at finde random kort.
+    'Creates a random number, which is used to find random cards.
     Shared random As New Random()
     Dim rn As Integer
 
-    'Laver 2 arrays, det ene er til alle kortene, og det andet er til bunken.
+    'Creates two arrays, the first is used for all the cards, and the second for the pile.
     Dim Kort(51) As Integer
     Dim række(28) As PictureBox
 
-    'Laver 2 variabler, der hjælper med at at "unlocke" kort, når andre bliver fjernet.
+    'Creates two variables, which helps "unlock" the cards when those ontop are gone.
     Dim Kort2 As Integer
     Dim NæsteRække As Integer
 
-    'Laver en index variabel, som bruges til at indsætte tal i arrayet.
+    'Creates an index variable, which is used to input number to the array.
     Dim i As Integer = 0
 
-    'laver 2 variabler, der bruges til at fjerne og finde kort i array
+    'Creates two variable which is used to remove and find cards in the array.
     Dim o As Integer = 1
     Dim p As Integer
 
-    'Husker pointene
+    'Remembers the points
     Dim point As Integer
 
-    'Konstant der får et loop til at køre for evigt
+    'Constant to make the loop run forever
     Const konstant As Boolean = True
 
-    'laver en dim der husker hvor mange kort man har vendt, en der sætter en værdi på kortene,
-    'og en der husker hvor mange gange hele bunken er vendt
+    'Creates a dim that remembers how many cards has been turned over, one that puts a value on the card
+    'and one that remembers how many times the pile has turned
     Dim k As Integer = 27
     Dim antalfyldte As Integer
     Dim bunkervendt As Integer
 
-    'laver en variabel der husker summen af kortet, hvor mange kort der er blevet klikket, og husker kortet som billede
+    'Creates a variable that remembers the sum of the cards, how many cards has been clicked, and remembers the card a picture
     Dim sum As Integer
     Dim KortKlikket As Integer
     Dim HuskKort As PictureBox
 
     'Bruges til at lave spillepladen, og felternes placering.
+    'Is used to create the playing board and the location of the marks
     Dim ANTAL_FELTER_X As Integer
     Dim ANTAL_FELTER_Y As Integer
     Dim x As Integer
@@ -57,10 +58,10 @@ Public Class Form1
 
     'program start
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'Ved program start: Opret alle picturebox felter på spillepladen
+        'At program start: Create all picturebox on the playing board.
         OpretSpilleplade(ANTAL_FELTER_X, ANTAL_FELTER_Y)
 
-        'sætter baggrundsfarven, størrelsen af billedet, og rammerne på pictureboxene for bunken
+        'Sets the background color, size of the image, and the frame of the picturebox for the pile.
         PicStartBunke.BackColor = Color.LightGray
         PicSlutBunke.BackColor = Color.LightGray
         PicStartBunke.SizeMode = PictureBoxSizeMode.StretchImage
@@ -68,14 +69,14 @@ Public Class Form1
         PicStartBunke.BorderStyle = BorderStyle.FixedSingle
         PicSlutBunke.BorderStyle = BorderStyle.FixedSingle
 
-        'sætter start billedet på PicStartBunke som bagsiden af et kort, for at man kan se at spillet lige er startet.
-        'den får desuden en værdi på 0.
+        'Sets the starting image on the pile as the backside of a card, to know that the game just startet.
+        'It also gets the value "0".
         PicStartBunke.Image = My.Resources.ResourceManager.GetObject("back")
         PicStartBunke.Tag = 0
 
-        'finder værdierne til bunken man trækker fra, indtil arrayet er fyldt.
-        'Dette gør den ved at finde et kort mellem 1 og 52, og tjekker om værdien er i arrayet
-        'hvis værdien ikke er i arrayet, sætter den værdien ind i arrayet, på en fri plads.
+        'Finds the values of the pile you pull from, until the array is full.
+        'Does it by finding a card between 1 & 52, and checks wether or not the value is in the array
+        'if the value is not in the array, its put in at an empty space.
         Do While antalfyldte < 24
             rn = random.Next(1, 52)
             If Not Kort.Contains(rn) Then
@@ -88,10 +89,10 @@ Public Class Form1
     End Sub
 
 
-    'Opret spilleplade med pictureboxe i et array som spillefelter
+    'Create the playing board with the pictureboxes in an array as playing fields
     Private Sub OpretSpilleplade(AntalFelterX As Integer, AntalFelterY As Integer)
 
-        'Opretter række 1
+        'Creates row 1
         NextRandom()
         Opretspillefelt(155, 221)
         NextRandom()
@@ -108,7 +109,7 @@ Public Class Form1
         Opretspillefelt(521, 221)
         NextRandom()
 
-        'Opretter række 2
+        'Creates row 2
         Opretspillefelt(186, 201)
         NextRandom()
         Opretspillefelt(247, 201)
@@ -122,7 +123,7 @@ Public Class Form1
         Opretspillefelt(491, 201)
         NextRandom()
 
-        'Opretter række 3
+        'Creates row 3
         Opretspillefelt(216, 181)
         NextRandom()
         Opretspillefelt(277, 181)
@@ -134,7 +135,7 @@ Public Class Form1
         Opretspillefelt(460, 181)
         NextRandom()
 
-        'Opretter række 4
+        'Creates row 4
         Opretspillefelt(246, 161)
         NextRandom()
         Opretspillefelt(307, 161)
@@ -144,7 +145,7 @@ Public Class Form1
         Opretspillefelt(429, 161)
         NextRandom()
 
-        'Opretter række 5
+        'Creates row 5
         Opretspillefelt(276, 141)
         NextRandom()
         Opretspillefelt(337, 141)
@@ -152,31 +153,31 @@ Public Class Form1
         Opretspillefelt(398, 141)
         NextRandom()
 
-        'Opretter række 6
+        'Creates row 6
         Opretspillefelt(306, 121)
         NextRandom()
         Opretspillefelt(367, 121)
         NextRandom()
 
-        'Opretter række 7
+        'Creates row 7
         Opretspillefelt(337, 101)
 
     End Sub
 
-    'Klik-rutine fælles for alle pictureboxes på spillepladen
+    'Click routine mutual for all the pictureboxes on the playing board
     Private Sub KlikFelt(sender As Object, e As EventArgs) Handles PicStartBunke.Click, PicSlutBunke.Click
 
-        'resetter værdierne for henholdsvis o & p
+    'resets values stored in "o" and "p"
         o = 1
         p = 1
 
-        'Find den picturebox, der blev klikket på
+    'Find the picturebox that was clicked.
         Dim PictureBoxKlikketPå As PictureBox = sender
         PictureBoxKlikketPå.Tag = sender.tag
 
-        'programmet går ind i en af de følgende if'er i forhold til hvilken værdi pictureboxen har
-        'inde i if'en laver den værdien om til et tal mellem 1 og 13, husker hvor mange kort der er blevet klikke på,
-        'og markere pictureboxen, medmindre det er et kort uden værdi, som bagsiden
+        'The program enters one of the following if-statements, compared to which value the picturebox holds
+        'The value is then changed to a number between 1 and 13, the same as the card itself. It also remembers how many cards was clicked
+        'and marks the picturepoxes, unless it's a card without a value, as the card only showing the backside.
         If 0 < CInt(PictureBoxKlikketPå.Tag) And CInt(PictureBoxKlikketPå.Tag) <= 13 Then
             sum = sum + PictureBoxKlikketPå.Tag
             KortKlikket = KortKlikket + 1
@@ -197,32 +198,30 @@ Public Class Form1
             Exit Sub
         End If
 
-        'hvis der kun er blevet klikket på et kort husker den pictureboxen
+        'the clicked card is remembered if only one card has been clicked
         If KortKlikket = 1 Then
             HuskKort = PictureBoxKlikketPå
         End If
 
 
         '*******************************************************************************
-        '* I følgende kode finder den ud af om der er blevet trykket på en af de to    *
-        '* pictureboxe, der bruges til bunken, og hvilke der er trykket.               *
+        '* In the following code, it figures which of the pile has been clicked        *
+        '* and which one.                                                              *
         '*******************************************************************************
-        '* I tilfælde hvor et af kortene trykket er fra PicStartBunke sætter den, den  *
-        '* nuværende værdi i arrayet til intet, og viser det næste mulige kort i       *
-        '* arrayet.                                                                    *
+        '* If the card pressed is from "PicStartBunke", the value inside the array     *
+        '* is set to nothing, and it shows the next possible card.                     *
         '*******************************************************************************
-        '* I tilfælde hvor et af kortene trykket, er fra PicSlutBunke, sætter den,     *
-        '* den nuværende værdi minus 1 i arrayet, til intet og viser det kort før,     *
-        '* der har en værdi i arrayet. hvis der intet kort er før, som har en værdi i  *
-        '* arrayet, viser den ikke noget kort.                                         *
+        '* If the card clicked is from "PicSlutBunke", the value minus 1 is set to     *
+        '* nothing and shows the first possible card with a value, that was before it. *
+        '* If no card was before it shows nothing.                                     *
         '*******************************************************************************
-        '* Hvis et kort fra PicStartBunke og PicSlutBunke bliver matchet, vil der ske  *
-        '* begge dele, både med kort, foran og bagved det kort der er matchet.         *
+        '* If a card from "PicStartBunke" and "PicSLutBunke" is matched,               *
+        '* the previous two are triggered.                                             *
         '*******************************************************************************
-        '* Udover dette, sætter vi også rammerne tilbage, så de ikke er markeret       *
-        '* længere, sætter summen og kortlikkende til 0, og tæller point               *
+        '* We also put the frames back, so the arent selected, puts the sum and        *
+        '* amount of times clicked to zero, and counts the points.                     *
         '*******************************************************************************
-        'hvis pictureboxene der er blevet klikket på er PicStartBunke og PicSlutBunke, og summen er 13, gå ind i if'en
+        'If the pciturebox clicked is either "PicStartBunke" or "PicSlutBunke", and the sum is 13, enter the if
         If CInt(PictureBoxKlikketPå.Tag) = CInt(PicStartBunke.Tag) And CInt(HuskKort.Tag) = CInt(PicSlutBunke.Tag) And sum = 13 Then
             Kort(k) = Nothing
 
@@ -260,43 +259,7 @@ Public Class Form1
             KortKlikket = 0
             point = point + 10
 
-            'hvis pictureboxene der er blevet klikket på er PicStartBunke og PicSlutBunke, og summen er 13, gå ind i if'en
-        ElseIf CInt(PictureBoxKlikketPå.Tag) = CInt(PicSlutBunke.Tag) And CInt(HuskKort.Tag) = CInt(PicStartBunke.Tag) And sum = 13 Then
-            Kort(k) = Nothing
-
-            Do While Kort(k - p) = Nothing
-                p = p - 1
-            Loop
-
-            Kort(k - p) = Nothing
-
-            Do While Kort(k) = Nothing And k < 52
-                k = k + 1
-            Loop
-
-            PicStartBunke.Image = My.Resources.ResourceManager.GetObject("_" & Kort(k))
-            PicStartBunke.Tag = Kort(k)
-
-            Do While Kort(k - o) = Nothing
-                o = o + 1
-            Loop
-
-            If (k - o) < 27 Then
-                PicSlutBunke.Image = Nothing
-                PicSlutBunke.Tag = Nothing
-            Else
-                PicSlutBunke.Image = My.Resources.ResourceManager.GetObject("_" & Kort(k - o))
-                PicSlutBunke.Tag = Kort(k - o)
-            End If
-
-            PicStartBunke.BorderStyle = BorderStyle.FixedSingle
-            PicSlutBunke.BorderStyle = BorderStyle.FixedSingle
-
-            sum = 0
-            KortKlikket = 0
-            point = point + 10
-
-            'hvis der er klikket på start bunken og summen er 13, gå ind i if'en
+            'If the starting pile is clicked and the sum is 13, enter the if.
         ElseIf CInt(PictureBoxKlikketPå.Tag) = CInt(PicStartBunke.Tag) And sum = 13 Then
             Kort(k) = Nothing
 
@@ -317,7 +280,7 @@ Public Class Form1
             KortKlikket = 0
             point = point + 10
 
-            'hvis det andet kort der er klikket på, er start bunken, og summen giver 13, gå ind i if'en
+            'If the second card clicked is from the start pile, and the sum is 13, enter the if.
         ElseIf CInt(HuskKort.Tag) = CInt(PicStartBunke.Tag) And sum = 13 Then
             Kort(k) = Nothing
 
@@ -338,7 +301,7 @@ Public Class Form1
             KortKlikket = 0
             point = point + 10
 
-            'Hvis det første kort der er klikket på, er kortet i slutbunken og summen er 13, gå ind i if'en
+            'If the first card clicked is from the second pile, and the sum is 13, enter the if.
         ElseIf CInt(PictureBoxKlikketPå.Tag) = CInt(PicSlutBunke.Tag) And sum = 13 Then
             Do While Kort(k - p) = Nothing
                 p = p - 1
@@ -368,7 +331,7 @@ Public Class Form1
             KortKlikket = 0
             point = point + 10
 
-            'hvis det andet kort der er klikket på er slutbunken og summen giver 13
+            'If the second card clicked is from the second pile, and the sum is 13, enter the if.
         ElseIf CInt(HuskKort.Tag) = CInt(PicSlutBunke.Tag) And sum = 13 Then
             Do While Kort(k - p) = Nothing
                 p = p - 1
@@ -397,7 +360,7 @@ Public Class Form1
             KortKlikket = 0
             point = point + 10
 
-            'hvis summen er 13 gå ind i if'en
+            'If the sum is 13, enter the if.
         ElseIf sum = 13 Then
             PictureBoxKlikketPå.Visible = False
             HuskKort.Visible = False
@@ -405,7 +368,7 @@ Public Class Form1
             KortKlikket = 0
             point = point + 10
 
-            'hvis der er klikket på 2 kort, gå ind i if'en
+            'If two cards has been clicked, enter the if.
         ElseIf KortKlikket = 2 Then
             sum = 0
             KortKlikket = 0
@@ -415,55 +378,55 @@ Public Class Form1
 
         TextBox_Point.Text = point
 
-        'Tjekker om der er kort der er blevet frie, og hvis der er, gør det, det muligt at bruge dem.
+        'Checks if any cards has "unlocked". Also makes it possible to use them if so.
         Unlock()
 
     End Sub
 
     Sub NextRandom()
-        'Kører loopet indtil der er fundet en ny værdi til arrayet
+        'Runs the loop until a new value is found for the array.
         Do While konstant = True
-            'finder et random tal mellem 1 og 52
+            'Finds a random number between 1 and 52.
             rn = random.Next(1, 52)
-            'Tjekker om arrayet indeholder det random tal, hvis ikke går den i if'en
+        'Checks if the arrays contains the found number, enters the if, if not.
             If Not Kort.Contains(rn) Then
-                'sætter det random tal ind i arrayet
+            'Inputs the found number in the array.
                 Kort(i) = rn
 
-                'går ud af loopet
+            'Exits the loop
                 Exit Do
             End If
         Loop
     End Sub
 
     Private Function Opretspillefelt(LocX As Single, LocY As Single) As Double
-        'Opret nyt object
+        'Creates new object
         PictureBoxFelt(x, y) = New PictureBox
-        'Sæt egenskaber størrelse, position, farve, osv.
+        'Sets properties size, position color etc.
         PictureBoxFelt(x, y).Size = New System.Drawing.Size(62, 88)
-        'Placering afhænger af x og y:
+        'Placement depends on "x" and "y".
         PictureBoxFelt(x, y).Location = New System.Drawing.Point(LocX, LocY)
         PictureBoxFelt(x, y).BackColor = Nothing
         PictureBoxFelt(x, y).SizeMode = PictureBoxSizeMode.StretchImage
         PictureBoxFelt(x, y).BorderStyle = BorderStyle.None
 
-        'sætter billedet lig med værdien i arrayet
+        'Sets the image equal to the value inside the array.
         PictureBoxFelt(x, y).Image = My.Resources.ResourceManager.GetObject("_" & Kort(i))
-        'giver pictureboxen værdien der er i arrayet
+        'Gives the picturebox the value inside the array.
         PictureBoxFelt(x, y).Tag = Kort(i)
 
-        'enabler hele den første række, disabler resten af rækkerne
+        'enables the first row, disables the rest of the rows
         If i > 6 Then
             PictureBoxFelt(x, y).Enabled = False
         End If
 
-        'finder ud af hvilket felt pictureboxen er i fra 0..27
+        'figures out which space the picturebox is in, form 0 to 27.
         række(i) = PictureBoxFelt(x, y)
 
-        'laver en ny i-værdi
+        'Increases the i value
         i = i + 1
 
-        'Tilknyt pictureboxen til Form1
+        'Adds the picturebox to form1
         Me.Controls.Add(Me.PictureBoxFelt(x, y))
 
         'Sæt klik-rutine til sub'en KlikFelt(). 
@@ -473,11 +436,11 @@ Public Class Form1
 
 
     Private Sub ButtonNext_Click(sender As Object, e As EventArgs) Handles ButtonNext.Click
-        'Når der trykkes "next" sætter den PicSlutBunke's billede og værdi lig PicStartBunke
+        'When the next button is pressed, the picture on "PicSlutBunke" and value is set to "PicStartBunke".
         PicSlutBunke.Image = PicStartBunke.Image
         PicSlutBunke.Tag = PicStartBunke.Tag
 
-        'Hvis k er mindre end halvtreds går den ind i if'en og plusser k indtil der er en brugbar værdi i arrayet
+        'If k is less than fifty, enter the if and add to k until a usable value is in the array.
         If k < 50 Then
             Do While Kort(k + 1) = Nothing
                 k = k + 1
@@ -485,33 +448,33 @@ Public Class Form1
         End If
 
 
-        'plusser k med 1, for at finde det næste kort
+        'Adds 1 to k to find the next card.
         k = k + 1
 
-        'hvis k bliver over 52, sætter den k lig 27 og husker hvor mange gange du har vendt bunken
+        'If k becomes more than 52, set it to 27 and remember how many times the pile has been turned.
         If k >= 52 Then
             k = 27
             bunkervendt = bunkervendt + 1
         End If
 
-        'hvis det er det sidste kort der bliver flyttet viser den bunken som tom
+        'If the card moved is the last in the pile, put the picturebox as an empty.
         If k = 51 Then
             PicStartBunke.Image = Nothing
             PicStartBunke.Tag = Nothing
 
-            'hvis man lige har startet bunken sætter den et kort på startbunken, men slutbunken er tom
+            'If the game has just started put a card on the start pile and nothing in the second pile.
         ElseIf k = 27 Then
             PicStartBunke.Image = My.Resources.ResourceManager.GetObject("_" & Kort(k))
             PicStartBunke.Tag = Kort(k)
             PicSlutBunke.Image = Nothing
 
-            'hvis ingen af de foregående if'er gælder, kører den bunken igennem og viser et nyt kort for hver gang du trykker
+            'If none of the above match, run the pile and show a new card everytime you click.
         Else
             PicStartBunke.Image = My.Resources.ResourceManager.GetObject("_" & Kort(k))
             PicStartBunke.Tag = Kort(k)
         End If
 
-        'Hvis bunken er blevet vendt 3 gange kan du ikke spille mere, og der kommer en knap frem, som bruges til at lave nyt spil
+        'If the pile has been turned three times, the game is over and a button is hsown to create a new game.
         If bunkervendt > 3 Then
             PictureBox_GameOver.Visible = True
             Button_NewGame.Enabled = True
@@ -521,18 +484,17 @@ Public Class Form1
         End If
     End Sub
 
-
+    '
+    '
     '*****************************************************************
-    '* I følgende kode tjekker den om der er nogle kort der kan      *
-    '* blive unlocked og bruges i spillet                            *
+    '* In the following it checks wether or not some cards           *
+    '* has been unlocked, and can be used.                           *
     '*****************************************************************
-    '* Dette gør den ved at køre den første bunke igennem som et     *
-    '* loop, og tjekker for hvert "par" kort ved siden af hinanden   *
-    '* om de er visible, hvis de ikke er det, skal den unlocke det   *
-    '* kort under de to kort der var der før.                        *
-    '* dette gør den for hver række, indtil vi når den sidste række. * 
-    '* her der tjekker den om det sidste kort er der, hvis ikke,     *
-    '* viser den et nyt vindue, som fortæller dig du har vundet.     *
+    '* It's done by checking all the rows, if two cards next to      *
+    '* eachother are visible or not. If not, it'll unlock the card   *
+    '* beneath them. It does this for every row except the last one, *
+    '* if no card is on the last space, a new window shows that says *
+    '* you've won.                                                   *
     '*****************************************************************
     Sub Unlock()
         For Kort As Integer = 0 To 5
@@ -592,7 +554,7 @@ Public Class Form1
 
 
     Private Sub Button_NewGame_Click(sender As Object, e As EventArgs) Handles Button_NewGame.Click
-        'hvis der trykket på knappen starter den spillet forfra
+        'If the button is pressed, the game restarts.
         Application.Restart()
     End Sub
 End Class
